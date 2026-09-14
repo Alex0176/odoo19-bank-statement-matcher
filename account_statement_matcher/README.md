@@ -34,6 +34,10 @@ correct them, and applies them through the regular accounting API
   "no match" — somebody still has to raise the invoice.
 * **Lets you assign by hand.** A picker over every open item, for everything the
   search cannot know about.
+* **Splits a payment across documents.** One transfer settling two invoices is
+  assigned one document at a time: the matched part moves to the receivable, the
+  rest stays on the suspense account and keeps its suggestions until it is gone.
+  The same mechanism covers partial payments and down payments.
 * **Assigns in bulk or one by one**, and lets you undo an assignment.
 * **Refuses to guess.** Ties are never resolved automatically, and weak
   suggestions are shown but not booked.
@@ -76,6 +80,10 @@ Money is involved, so the module is deliberately cautious:
   imported twice — is refused rather than reconciled twice.
 * Each line is assigned inside its own savepoint: one failure never leaves
   another line half-assigned.
+* A statement line is only marked done when nothing is left over. Moving the
+  whole counterpart off the suspense account for a partial match would make Odoo
+  report the line as reconciled -- there is no suspense line left to contradict
+  it -- and the remaining money would vanish from every list.
 * Journal items carrying no date at all are kept out of the suggestions and
   refused on assignment. Such rows exist in migrated databases and make Odoo's
   reconciliation engine raise a `TypeError`, because it sorts by

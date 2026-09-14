@@ -415,41 +415,93 @@ class AccountBankStatementLine(models.Model):
                 "Statement line %s has no single open counterpart line; it was "
                 "probably already partly assigned.", self.display_name))
 
+        # How much of this statement line does the selection actually settle?
+        # Moving the *whole* counterpart to the receivable account whenever a
+        # single document is picked is wrong: a payment covering two invoices
+        # would leave the second one unpaid while Odoo, finding no suspense line
+        # any more, reports the statement line as reconciled. The remainder has
+        # to stay on the suspense account so that it remains visible and
+        # assignable. The same split makes partial payments and down payments
+        # work by construction.
         move = self.move_id
+        suspense_balance = suspense.balance
+        allocate = -sum(target_lines.mapped("amount_residual"))
+        if abs(allocate) > abs(suspense_balance):
+            # The documents are worth more than this payment: settle what we can.
+            allocate = suspense_balance
+        remainder = suspense_balance - allocate
+        ratio = (allocate / suspense_balance) if suspense_balance else 0.0
+        allocate_currency = suspense.amount_currency * ratio
+        maturity = suspense.date_maturity or self.date or move.date
+
         was_posted = move.state == "posted"
         if was_posted:
             move.button_draft()
+
         # date_maturity matters: Odoo sorts the items of a reconciliation by
         # "date_maturity or date". A receivable/payable line that carries
         # neither makes that expression return False, and sorting False against
         # a date raises a TypeError deep inside the reconciliation engine.
-        suspense.write({
+        target_vals = {
             "account_id": accounts.id,
             "partner_id": partners.id if partners else False,
-            "date_maturity": suspense.date_maturity or self.date or move.date,
-        })
+            "date_maturity": maturity,
+        }
+        if self.company_currency_id.is_zero(remainder):
+            suspense.write(target_vals)
+        else:
+            move.write({"line_ids": [
+                (1, suspense.id, {
+                    "balance": remainder,
+                    "amount_currency": suspense.amount_currency - allocate_currency,
+                }),
+                (0, 0, dict(
+                    target_vals,
+                    name=suspense.name or self.payment_ref,
+                    balance=allocate,
+                    amount_currency=allocate_currency,
+                    currency_id=suspense.currency_id.id,
+                )),
+            ]})
         if was_posted:
             move.action_post()
 
-        # Re-read: once the counterpart no longer sits on the suspense account,
-        # _seek_for_lines reports it as an "other" line, so both buckets have to
-        # be taken. Reconciling against the suspense bucket alone is a silent
-        # no-op -- the statement line then looks assigned while the invoice
-        # stays open.
+        # Re-read: once a counterpart sits on the document's account,
+        # _seek_for_lines reports it as an "other" line rather than a suspense
+        # one. Reconciling the suspense bucket alone is a silent no-op -- the
+        # statement line then looks assigned while the invoice stays open.
         liquidity, suspense, other = self._seek_for_lines()
-        counterpart = (suspense | other) - liquidity
+        counterpart = ((suspense | other) - liquidity).filtered(
+            lambda l: l.account_id == accounts and not l.reconciled)
         if not counterpart:
             raise UserError(_(
                 "The counterpart line of %s disappeared while assigning it.",
                 self.display_name))
         (counterpart + target_lines).reconcile()
-        self.matcher_candidate_ids.unlink()
-        self.matcher_state = "done"
+
+        self._matcher_after_apply(target_lines)
+        return True
+
+    def _matcher_after_apply(self, target_lines):
+        """Update state and suggestions once something has been assigned.
+
+        Only a line with nothing left over is finished. As long as money remains
+        the remaining suggestions have to survive, otherwise the rest of the
+        payment silently drops out of every list.
+        """
+        self.ensure_one()
+        self.invalidate_recordset()
         _logger.info(
             "Statement line %s assigned to %s",
             self.id, ", ".join(target_lines.mapped("move_id.name")),
         )
-        return True
+        if self.is_reconciled:
+            self.matcher_candidate_ids.unlink()
+            self.matcher_state = "done"
+            return
+        # Something is left: drop the suggestions that were just settled and
+        # search again for the remainder.
+        self.action_matcher_refresh()
 
     def action_matcher_apply_best(self):
         """Apply the single best suggestion, refusing anything ambiguous.
