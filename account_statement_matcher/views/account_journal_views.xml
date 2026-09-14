@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Biricon IT Services GmbH
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <record id="view_account_journal_form_matcher" model="ir.ui.view">
+        <field name="name">account.journal.form.matcher</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="matcher_auto_suggest"
+                       invisible="type not in ('bank', 'cash')"/>
+                <field name="matcher_auto_apply_min_score"
+                       invisible="type not in ('bank', 'cash')"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

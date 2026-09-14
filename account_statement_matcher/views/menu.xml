@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Biricon IT Services GmbH
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <menuitem id="menu_statement_matcher"
+              name="Bank Line Assignment"
+              parent="account.menu_finance_entries"
+              action="action_statement_line_matcher"
+              sequence="25"
+              groups="account.group_account_user"/>
+</odoo>

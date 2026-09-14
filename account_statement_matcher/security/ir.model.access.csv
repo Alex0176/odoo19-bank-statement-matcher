@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_match_candidate_user,account.statement.match.candidate.user,model_account_statement_match_candidate,account.group_account_user,1,1,1,1
+access_match_candidate_readonly,account.statement.match.candidate.readonly,model_account_statement_match_candidate,account.group_account_readonly,1,0,0,0
+access_match_wizard_user,account.statement.match.wizard.user,model_account_statement_match_wizard,account.group_account_user,1,1,1,1
