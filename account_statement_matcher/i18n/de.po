@@ -1,0 +1,452 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_matcher
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-14 10:07+0000\n"
+"PO-Revision-Date: 2026-09-14 10:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/wizard/statement_match_wizard.py:0
+msgid "%(applied)s assigned, %(skipped)s left for review, %(failed)s failed."
+msgstr ""
+"%(applied)s zugeordnet, %(skipped)s zur Prüfung, %(failed)s fehlgeschlagen."
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "%s is already settled. Search again to get current suggestions."
+msgstr "%s ist bereits ausgeglichen. Bitte erneut suchen."
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/wizard/statement_match_wizard.py:0
+msgid "%s line(s) searched again."
+msgstr "%s Zeile(n) erneut durchsucht."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_statement_match_candidate__score
+msgid ""
+"100 a document reference was found in the bank text, 80 partner and amount "
+"match, 60 the amount identifies a single open item, 30 partner only."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid ""
+"A line that finds nothing today can be searched again later:\n"
+"                        vendor bills, credit notes and down payments entered\n"
+"                        afterwards are picked up by \"Search again\"."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_journal__matcher_auto_apply_min_score__60
+msgid "Also when the amount alone is unique"
+msgstr "Auch wenn nur der Betrag eindeutig ist"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Ambiguous"
+msgstr "Mehrdeutig"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Apply best suggestion"
+msgstr "Besten Vorschlag übernehmen"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Assign"
+msgstr "Zuordnen"
+
+#. module: account_statement_matcher
+#: model:ir.actions.act_window,name:account_statement_matcher.action_statement_match_wizard
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
+msgid "Assign Bank Lines"
+msgstr "Bankzeilen zuordnen"
+
+#. module: account_statement_matcher
+#: model:ir.model,name:account_statement_matcher.model_account_statement_match_wizard
+msgid "Assign Bank Statement Lines"
+msgstr "Kontoauszugszeilen zuordnen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_journal__matcher_auto_apply_min_score
+msgid "Assign automatically from"
+msgstr "Automatisch zuordnen ab"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
+msgid "Assign unambiguous matches"
+msgstr "Eindeutige Treffer zuordnen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_bank_statement_line__matcher_state__done
+msgid "Assigned"
+msgstr "Zugeordnet"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Bank Line"
+msgstr "Bankzeile"
+
+#. module: account_statement_matcher
+#: model:ir.actions.act_window,name:account_statement_matcher.action_statement_line_matcher
+#: model:ir.ui.menu,name:account_statement_matcher.menu_statement_matcher
+msgid "Bank Line Assignment"
+msgstr "Bankzeilen-Zuordnung"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_list
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Bank Lines"
+msgstr "Bankzeilen"
+
+#. module: account_statement_matcher
+#: model:ir.model,name:account_statement_matcher.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Kontoauszugszeile"
+
+#. module: account_statement_matcher
+#: model:ir.model,name:account_statement_matcher.model_account_statement_match_candidate
+msgid "Bank Statement Match Suggestion"
+msgstr "Zuordnungsvorschlag Kontoauszug"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
+msgid "Close"
+msgstr "Schließen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__currency_id
+msgid "Company Currency"
+msgstr "Firmenwährung"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__score
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Confidence"
+msgstr "Vertrauenswert"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_journal__matcher_auto_apply_min_score
+msgid ""
+"Confidence a suggestion needs before the bulk action assigns it without "
+"being asked. Weaker suggestions are still shown, they just have to be "
+"confirmed one by one."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__create_uid
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__create_date
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__display_name
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__display_name
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_statement_match_candidate.py:0
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__move_id
+msgid "Document"
+msgstr "Beleg"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__date
+msgid "Document Date"
+msgstr "Belegdatum"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Has suggestion"
+msgstr "Mit Vorschlag"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__id
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_journal__id
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__id
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.actions.act_window,help:account_statement_matcher.action_statement_line_matcher
+msgid ""
+"Imported bank lines that are not yet assigned to a document appear here."
+msgstr ""
+"Hier stehen importierte Bankzeilen, die noch keinem Beleg zugeordnet sind."
+
+#. module: account_statement_matcher
+#: model:ir.model,name:account_statement_matcher.model_account_journal
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Journal"
+msgstr "Journal"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__write_uid
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__write_date
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_candidate_ids
+msgid "Match Suggestions"
+msgstr "Zuordnungsvorschläge"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__rule
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Matched by"
+msgstr "Gefunden über"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_state
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Matching"
+msgstr "Zuordnung"
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "No document selected for %s."
+msgstr "Für %s wurde kein Beleg ausgewählt."
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "No match"
+msgstr "Kein Treffer"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_bank_statement_line__matcher_state__none
+msgid "No match found"
+msgstr "Kein Treffer gefunden"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_bank_statement_line__matcher_state__todo
+msgid "Not searched yet"
+msgstr "Noch nicht gesucht"
+
+#. module: account_statement_matcher
+#: model_terms:ir.actions.act_window,help:account_statement_matcher.action_statement_line_matcher
+msgid "Nothing left to assign."
+msgstr "Nichts mehr zuzuordnen."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__only_unassigned
+msgid "Only unassigned lines"
+msgstr "Nur nicht zugeordnete Zeilen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_journal__matcher_auto_apply_min_score__100
+msgid "Only when a document reference was found"
+msgstr "Nur wenn eine Belegreferenz gefunden wurde"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Open"
+msgstr "Öffnen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__amount_residual
+msgid "Open Amount"
+msgstr "Offener Betrag"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__move_line_id
+msgid "Open Item"
+msgstr "Offener Posten"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__partner_id
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Partner"
+msgstr "Partner"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_statement_match_candidate__rule__partner_amount
+msgid "Partner and amount"
+msgstr "Partner und Betrag"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_statement_match_candidate__rule__partner
+msgid "Partner only"
+msgstr "Nur Partner"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Reference"
+msgstr "Referenz"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_statement_match_candidate__rule__reference
+msgid "Reference found"
+msgstr "Referenz gefunden"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_journal__matcher_auto_apply_min_score__80
+msgid "Reference, or partner and amount together"
+msgstr "Referenz, oder Partner und Betrag zusammen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__message
+msgid "Result"
+msgstr "Ergebnis"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_bank_statement_line__matcher_state
+msgid ""
+"Result of the last search for matching documents. Refresh it whenever new "
+"documents have been entered."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_list
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
+msgid "Search again"
+msgstr "Erneut suchen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_journal__matcher_auto_suggest
+msgid ""
+"Search for matching invoices, bills, credit notes and payments as soon as a "
+"statement line is created. Suggestions are only proposed; nothing is booked "
+"without a user confirming it."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_bank_statement_line__matcher_state__ambiguous
+msgid "Several equal matches"
+msgstr "Mehrere gleichwertige Treffer"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__statement_line_id
+msgid "Statement Line"
+msgstr "Auszugszeile"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__line_ids
+msgid "Statement Lines"
+msgstr "Auszugszeilen"
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid ""
+"Statement line %s has no single open counterpart line; it was probably "
+"already partly assigned."
+msgstr ""
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "Statement line %s is already assigned."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_journal__matcher_auto_suggest
+msgid "Suggest matches on import"
+msgstr "Beim Import Zuordnung vorschlagen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_bank_statement_line__matcher_state__suggested
+msgid "Suggestion available"
+msgstr "Vorschlag vorhanden"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_candidate_count
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Suggestions"
+msgstr "Vorschläge"
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "The counterpart line of %s disappeared while assigning it."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_statement_match_candidate__amount_residual
+msgid ""
+"The residual amount on a journal item expressed in the company currency."
+msgstr ""
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid ""
+"The selected documents belong to different partners. Assign them one at a "
+"time."
+msgstr ""
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid ""
+"The selected documents use different accounts (%s). Assign them one at a "
+"time."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
+msgid ""
+"This posts the assignments for every line with exactly one best suggestion. "
+"Continue?"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid ""
+"This removes the assignment and puts the amount back on the suspense "
+"account. Continue?"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_list
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
+msgid "Total"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Unassigned"
+msgstr "Nicht zugeordnet"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Undo assignment"
+msgstr "Zuordnung aufheben"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_statement_match_candidate__rule__amount_unique
+msgid "Unique amount"
+msgstr "Eindeutiger Betrag"
