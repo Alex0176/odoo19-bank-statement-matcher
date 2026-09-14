@@ -6,7 +6,7 @@
     "version": "19.0.1.0.0",
     "category": "Accounting/Accounting",
     "author": "Biricon IT Services GmbH",
-    "website": "https://github.com/biricon/odoo-account-statement-matcher",
+    "website": "https://github.com/Alex0176/odoo19-bank-statement-matcher",
     "license": "AGPL-3",
     "depends": ["account_statement_matcher", "account_statement_import_file"],
     "installable": True,
