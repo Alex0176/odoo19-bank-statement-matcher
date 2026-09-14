@@ -1,13 +1,10 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* account_statement_matcher
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 10:07+0000\n"
-"PO-Revision-Date: 2026-09-14 10:07+0000\n"
+"POT-Creation-Date: 2026-09-14 12:47+0000\n"
+"PO-Revision-Date: 2026-09-14 12:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -22,6 +19,26 @@ msgstr ""
 msgid "%(applied)s assigned, %(skipped)s left for review, %(failed)s failed."
 msgstr ""
 "%(applied)s zugeordnet, %(skipped)s zur Prüfung, %(failed)s fehlgeschlagen."
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid ""
+"%(label)s %(name)s (%(partner)s, %(amount)s) matches this payment but has no"
+" open item yet -- it is probably not invoiced."
+msgstr ""
+"%(label)s %(name)s (%(partner)s, %(amount)s) passt zu dieser Zahlung, hat "
+"aber noch keinen offenen Posten – vermutlich noch nicht fakturiert."
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid ""
+"%s has no date and cannot be reconciled. Such rows usually come from a "
+"migration; the date has to be corrected on the document first."
+msgstr ""
+"%s hat kein Datum und kann nicht ausgeglichen werden. Solche Zeilen stammen "
+"meist aus einer Migration; das Datum muss zuerst am Beleg berichtigt werden."
 
 #. module: account_statement_matcher
 #. odoo-python
@@ -72,6 +89,7 @@ msgstr "Zuordnen"
 
 #. module: account_statement_matcher
 #: model:ir.actions.act_window,name:account_statement_matcher.action_statement_match_wizard
+#: model:ir.actions.act_window,name:account_statement_matcher.action_statement_open_assignment
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
 msgid "Assign Bank Lines"
 msgstr "Bankzeilen zuordnen"
@@ -85,6 +103,17 @@ msgstr "Kontoauszugszeilen zuordnen"
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_journal__matcher_auto_apply_min_score
 msgid "Assign automatically from"
 msgstr "Automatisch zuordnen ab"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_manual_line_id
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Assign manually"
+msgstr "Manuell zuordnen"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Assign this document"
+msgstr "Diesen Beleg zuordnen"
 
 #. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
@@ -256,6 +285,11 @@ msgid "Not searched yet"
 msgstr "Noch nicht gesucht"
 
 #. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_hint
+msgid "Note"
+msgstr "Hinweis"
+
+#. module: account_statement_matcher
 #: model_terms:ir.actions.act_window,help:account_statement_matcher.action_statement_line_matcher
 msgid "Nothing left to assign."
 msgstr "Nichts mehr zuzuordnen."
@@ -302,6 +336,31 @@ msgid "Partner only"
 msgstr "Nur Partner"
 
 #. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "Pick an open item first."
+msgstr "Bitte zuerst einen offenen Posten auswählen."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_bank_statement_line__matcher_manual_line_id
+msgid ""
+"Pick any open item yourself when no suggestion fits, for example when the "
+"payment belongs to a document the search cannot know about."
+msgstr ""
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "Purchase Order"
+msgstr "Bestellung"
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "Quotation/Order"
+msgstr "Angebot/Auftrag"
+
+#. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
 msgid "Reference"
 msgstr "Referenz"
@@ -334,6 +393,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
 msgid "Search again"
 msgstr "Erneut suchen"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Search an open invoice, bill, credit note or payment..."
+msgstr "Offene Rechnung, Eingangsrechnung, Gutschrift oder Zahlung suchen …"
 
 #. module: account_statement_matcher
 #: model:ir.model.fields,help:account_statement_matcher.field_account_journal__matcher_auto_suggest
@@ -392,7 +456,7 @@ msgstr "Vorschläge"
 #. odoo-python
 #: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
 msgid "The counterpart line of %s disappeared while assigning it."
-msgstr ""
+msgstr "Die Gegenbuchung von %s ist beim Zuordnen verschwunden."
 
 #. module: account_statement_matcher
 #: model:ir.model.fields,help:account_statement_matcher.field_account_statement_match_candidate__amount_residual
@@ -450,3 +514,17 @@ msgstr "Zuordnung aufheben"
 #: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_statement_match_candidate__rule__amount_unique
 msgid "Unique amount"
 msgstr "Eindeutiger Betrag"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_bank_statement_line__matcher_hint
+msgid ""
+"What the search found out about this line even though nothing could be "
+"assigned -- typically a quotation or an order that has not been invoiced "
+"yet."
+msgstr ""
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "purchase.order"
+msgstr ""

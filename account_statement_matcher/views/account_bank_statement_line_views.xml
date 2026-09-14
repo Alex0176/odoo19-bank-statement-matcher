@@ -69,6 +69,19 @@
                             <field name="ref" readonly="1"/>
                         </group>
                     </group>
+                    <div class="alert alert-warning" role="status"
+                         invisible="not matcher_hint">
+                        <field name="matcher_hint" readonly="1" nolabel="1"/>
+                    </div>
+                    <group string="Assign manually"
+                           invisible="is_reconciled">
+                        <field name="matcher_manual_line_id"
+                               options="{'no_create': True, 'no_open': True}"
+                               placeholder="Search an open invoice, bill, credit note or payment..."/>
+                        <button name="action_matcher_assign_manual" type="object"
+                                string="Assign this document" class="btn-primary"
+                                invisible="not matcher_manual_line_id"/>
+                    </group>
                     <separator string="Suggestions"/>
                     <field name="matcher_candidate_ids" readonly="1" nolabel="1">
                         <list create="false" delete="false">
@@ -148,6 +161,19 @@
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_statement_line_matcher_form"/>
         <field name="act_window_id" ref="action_statement_line_matcher"/>
+    </record>
+
+
+    <!-- Open the assignment screen for selected statements. Works from the
+         statement list that core Odoo provides, without needing a form view. -->
+    <record id="action_statement_open_assignment" model="ir.actions.act_window">
+        <field name="name">Assign Bank Lines</field>
+        <field name="res_model">account.bank.statement.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_statement_line_matcher_search"/>
+        <field name="domain">[('statement_id', 'in', active_ids)]</field>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_view_types">list,form</field>
     </record>
 
 </odoo>

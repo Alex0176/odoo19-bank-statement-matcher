@@ -1,0 +1,57 @@
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan">Bank Statement Matcher</h2>
+    <h3 class="oe_slogan">Assign bank statement lines to invoices, bills,
+      credit notes and payments — on Odoo Community</h3>
+    <div class="oe_span12">
+      <p class="oe_mt32">
+        Odoo's bank reconciliation widget is part of
+        <code>account_accountant</code>, an Enterprise module. On Community
+        there is no way to assign an imported bank line to a document from the
+        user interface, so statement lines pile up on the bank suspense
+        account. This module rebuilds the missing step.
+      </p>
+    </div>
+  </div>
+
+  <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+      <h3 class="oe_slogan">Suggests on import</h3>
+      <p>
+        Every new statement line is searched against the open receivables and
+        payables as soon as it is created. Each suggestion carries a confidence
+        and the rule that produced it, so you can see why it was proposed.
+      </p>
+    </div>
+    <div class="oe_span6">
+      <h3 class="oe_slogan">Searches again, later</h3>
+      <p>
+        A line that matches nothing today usually becomes matchable once the
+        vendor bill, the credit note or the down payment has been entered.
+        "Search again" picks those up at any time.
+      </p>
+    </div>
+  </div>
+
+  <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+      <h3 class="oe_slogan">Refuses to guess</h3>
+      <p>
+        Ties are never resolved automatically. Each journal sets the confidence
+        a suggestion needs before the bulk action books it; weaker matches are
+        shown but must be confirmed one by one. Stored suggestions are
+        re-checked before use, so a document settled in the meantime is
+        refused rather than reconciled twice.
+      </p>
+    </div>
+    <div class="oe_span6">
+      <h3 class="oe_slogan">Works anywhere</h3>
+      <p>
+        Matching compares a document's own identifiers against the bank's free
+        text, so any numbering scheme in any country works. The module depends
+        on <code>account</code> alone and brings its own views, because Odoo
+        Community ships none for bank statement lines.
+      </p>
+    </div>
+  </div>
+</section>
