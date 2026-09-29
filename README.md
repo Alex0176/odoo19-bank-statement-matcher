@@ -42,6 +42,34 @@ correct them, and applies them through the regular accounting API
 * **Refuses to guess.** Ties are never resolved automatically, and weak
   suggestions are shown but not booked.
 
+## Booking rules
+
+Some payments have no document at all: rent, bank fees, interest, salaries.
+The search rightly finds nothing, and left alone such lines either stay on the
+suspense account or get parked on whatever vendor account is at hand, which
+falsifies that vendor's balance.
+
+*Accounting → Configuration → Bank Line Booking Rules* holds plain rules:
+
+| Field | Meaning |
+|---|---|
+| Direction | Money going out, coming in, or both. The same word can mean two accounts: interest paid on a loan versus interest received on a deposit. |
+| Keywords | One word or phrase per line, compared with the bank text, reference and counterparty name. Case, spaces and punctuation are ignored. Keywords under three characters are dropped. |
+| Only for partner | Restrict the rule to one partner. Without keywords every line of that partner matches. |
+| Book on account | A plain account. Receivable, payable, bank and credit card accounts are refused, because those are settled by the search. |
+| Set partner to | Replace the partner when booking, for example when the import assigned the company itself but the text names a person. |
+| Book without asking | The bulk action books such lines on its own. Otherwise the rule only proposes. |
+
+Rules are tried in order and the first hit wins. They apply only when the search
+found no document with a reference match or with partner and amount together, so
+an open invoice always beats a rule. Booking rewrites the suspense line of the
+statement move; **date and amounts are never touched**, which keeps closed
+periods and their balances correct for back-dated lines. Undo works like for any
+other assignment.
+
+The module ships **no rules**. Accounts differ per chart of accounts and per
+company, so they are configuration, not code.
+
 ## Matching rules
 
 | Confidence | Rule | Meaning |

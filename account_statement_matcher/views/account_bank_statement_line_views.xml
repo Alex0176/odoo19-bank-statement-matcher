@@ -24,7 +24,7 @@
                 <field name="is_reconciled" optional="hide"/>
                 <field name="matcher_state" widget="badge"
                        decoration-success="matcher_state == 'done'"
-                       decoration-info="matcher_state == 'suggested'"
+                       decoration-info="matcher_state in ('suggested', 'rule')"
                        decoration-warning="matcher_state == 'ambiguous'"/>
                 <field name="matcher_candidate_count" string="#"/>
                 <button name="action_matcher_refresh" type="object"
@@ -46,6 +46,10 @@
                             string="Apply best suggestion" class="btn-primary"
                             icon="fa-check"
                             invisible="matcher_state != 'suggested'"/>
+                    <button name="action_matcher_apply_rule" type="object"
+                            string="Book by rule" class="btn-primary"
+                            icon="fa-check"
+                            invisible="matcher_state != 'rule'"/>
                     <button name="action_matcher_unassign" type="object"
                             string="Undo assignment" class="btn-secondary"
                             icon="fa-undo"
@@ -72,6 +76,15 @@
                     <div class="alert alert-warning" role="status"
                          invisible="not matcher_hint">
                         <field name="matcher_hint" readonly="1" nolabel="1"/>
+                    </div>
+                    <div class="alert alert-info" role="status"
+                         invisible="not matcher_rule_id">
+                        <field name="matcher_rule_id" readonly="1"/>
+                        <span invisible="matcher_state != 'rule'"> matches this line and books it on
+                        </span>
+                        <span invisible="matcher_state == 'rule'"> booked this line on
+                        </span>
+                        <field name="matcher_rule_account_id" readonly="1" nolabel="1"/>
                     </div>
                     <group string="Assign manually"
                            invisible="is_reconciled">
@@ -121,6 +134,8 @@
                         domain="[('is_reconciled', '=', False)]"/>
                 <filter name="has_suggestion" string="Has suggestion"
                         domain="[('matcher_state', '=', 'suggested')]"/>
+                <filter name="rule_match" string="Booking rule"
+                        domain="[('matcher_state', '=', 'rule')]"/>
                 <filter name="ambiguous" string="Ambiguous"
                         domain="[('matcher_state', '=', 'ambiguous')]"/>
                 <filter name="no_match" string="No match"

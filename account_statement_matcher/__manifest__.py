@@ -4,7 +4,7 @@
     "name": "Bank Statement Matcher",
     "summary": "Suggest and apply the reconciliation of bank statement lines "
                "with invoices, bills, credit notes and payments",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Accounting/Accounting",
     "author": "Biricon IT Services GmbH",
     "website": "https://github.com/Alex0176/odoo19-bank-statement-matcher",
@@ -12,6 +12,7 @@
     "depends": ["account"],
     "data": [
         "security/ir.model.access.csv",
+        "views/account_statement_booking_rule_views.xml",
         "views/account_bank_statement_line_views.xml",
         "views/account_journal_views.xml",
         "wizard/statement_match_wizard_views.xml",

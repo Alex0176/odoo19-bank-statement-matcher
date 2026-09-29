@@ -61,6 +61,7 @@ class AccountBankStatementLine(models.Model):
             ("none", "No match found"),
             ("suggested", "Suggestion available"),
             ("ambiguous", "Several equal matches"),
+            ("rule", "Booking rule matches"),
             ("done", "Assigned"),
         ],
         string="Matching",
@@ -87,6 +88,16 @@ class AccountBankStatementLine(models.Model):
         help="Pick any open item yourself when no suggestion fits, for example "
              "when the payment belongs to a document the search cannot know "
              "about.",
+    )
+    matcher_rule_id = fields.Many2one(
+        comodel_name="account.statement.booking.rule",
+        string="Booking Rule",
+        readonly=True,
+        copy=False,
+        help="The rule that matches this line, or the one that booked it.",
+    )
+    matcher_rule_account_id = fields.Many2one(
+        related="matcher_rule_id.account_id", string="Rule Account",
     )
     matcher_hint = fields.Text(
         string="Note",
@@ -260,6 +271,16 @@ class AccountBankStatementLine(models.Model):
 
         return found
 
+    def _matcher_find_rule(self, haystack):
+        """First booking rule (by sequence) that fits this line, or none."""
+        self.ensure_one()
+        rules = self.env["account.statement.booking.rule"].search(
+            [("company_id", "=", self.company_id.id)])
+        for rule in rules:
+            if rule._matches(self, haystack):
+                return rule
+        return rules.browse()
+
     def _matcher_documents_without_open_item(self, haystack):
         """Explain a line that names a document which cannot be settled yet.
 
@@ -327,27 +348,43 @@ class AccountBankStatementLine(models.Model):
             if line.is_reconciled:
                 line.matcher_state = "done"
                 continue
+            line.matcher_rule_id = False
+            haystack = line._matcher_normalise(line._matcher_text())
             found = line._matcher_search()
+            # A booking rule only steps in where the search has nothing solid:
+            # an open item that names its own reference or matches partner and
+            # amount is the better answer, because that document already
+            # carries the expense.
+            best = max((score for score, _r in found.values()), default=0)
+            rule = line._matcher_find_rule(haystack) if best < SCORE_PARTNER_EXACT \
+                else self.env["account.statement.booking.rule"]
             if not found:
+                if rule:
+                    line.matcher_hint = False
+                    line.matcher_rule_id = rule
+                    line.matcher_state = "rule"
+                    continue
                 # Nothing to reconcile -- but the line may still name a document.
-                haystack = line._matcher_normalise(line._matcher_text())
                 line.matcher_hint = line._matcher_documents_without_open_item(haystack)
                 line.matcher_state = "none"
                 continue
             line.matcher_hint = False
             values = []
-            for aml, (score, rule) in found.items():
+            for aml, (score, rule_name) in found.items():
                 values.append({
                     "statement_line_id": line.id,
                     "move_line_id": aml.id,
                     "score": score,
-                    "rule": rule,
+                    "rule": rule_name,
                 })
             Candidate.create(values)
-            best = max(found.values())[0]
             top = [aml for aml, (score, _r) in found.items() if score == best]
-            line.matcher_state = "ambiguous" if len(top) > 1 and best < SCORE_REFERENCE \
-                else "suggested"
+            if rule:
+                line.matcher_rule_id = rule
+                line.matcher_state = "rule"
+            else:
+                line.matcher_state = "ambiguous" \
+                    if len(top) > 1 and best < SCORE_REFERENCE else "suggested"
         return True
 
     # ------------------------------------------------------------------
@@ -482,6 +519,57 @@ class AccountBankStatementLine(models.Model):
         self._matcher_after_apply(target_lines)
         return True
 
+    def _matcher_apply_rule(self, rule):
+        """Book the whole line on the rule's account.
+
+        The counterpart line moves from the suspense account to the rule's
+        account, nothing else changes: not the date, not the amounts. That
+        matters for old lines -- a year's balance only stays right when the
+        booking keeps the date the bank gave it.
+
+        The line is written directly instead of resetting the entry to draft
+        and posting it again. Posting recomputes everything on the entry, and
+        nothing here needs recomputing.
+        """
+        self.ensure_one()
+        if self.is_reconciled:
+            raise UserError(_("Statement line %s is already assigned.", self.display_name))
+        suspense = self._matcher_counterpart_lines()
+        if len(suspense) != 1:
+            raise UserError(_(
+                "Statement line %s has no single open counterpart line; it was "
+                "probably already partly assigned.", self.display_name))
+        move = self.move_id
+        suspense.write({"account_id": rule.account_id.id})
+        partner = rule.assign_partner_id
+        if partner:
+            move.line_ids.write({"partner_id": partner.id})
+            if move.partner_id != partner:
+                move.write({"partner_id": partner.id})
+            if self.partner_id != partner:
+                self.write({"partner_id": partner.id})
+        self.invalidate_recordset()
+        if not self.is_reconciled:
+            raise UserError(_(
+                "Booking %(line)s on %(account)s did not leave the line settled.",
+                line=self.display_name, account=rule.account_id.display_name))
+        self.matcher_candidate_ids.unlink()
+        self.matcher_rule_id = rule
+        self.matcher_state = "done"
+        _logger.info(
+            "Statement line %s booked on %s by rule %s",
+            self.id, rule.account_id.code, rule.id,
+        )
+        return True
+
+    def action_matcher_apply_rule(self):
+        """Book the selected lines by the rule that matches them."""
+        for line in self:
+            if not line.matcher_rule_id:
+                raise UserError(_("No booking rule matches %s.", line.display_name))
+            line._matcher_apply_rule(line.matcher_rule_id)
+        return True
+
     def _matcher_after_apply(self, target_lines):
         """Update state and suggestions once something has been assigned.
 
@@ -514,6 +602,13 @@ class AccountBankStatementLine(models.Model):
         applied = 0
         for line in self:
             if line.is_reconciled:
+                continue
+            if line.matcher_state == "rule":
+                # A rule takes over only where nothing solid was found, and it
+                # books on its own only when it was set up to.
+                if line.matcher_rule_id.auto_apply:
+                    line._matcher_apply_rule(line.matcher_rule_id)
+                    applied += 1
                 continue
             candidates = line.matcher_candidate_ids
             if not candidates:
@@ -549,6 +644,7 @@ class AccountBankStatementLine(models.Model):
             (suspense + other).write({"account_id": suspense_account.id})
             if was_posted:
                 move.action_post()
+            line.matcher_rule_id = False
             line.matcher_state = "todo"
         return True
 

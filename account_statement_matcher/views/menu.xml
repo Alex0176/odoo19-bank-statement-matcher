@@ -8,4 +8,10 @@
               action="action_statement_line_matcher"
               sequence="25"
               groups="account.group_account_user"/>
+    <menuitem id="menu_booking_rule"
+              name="Bank Line Booking Rules"
+              parent="account.menu_finance_configuration"
+              action="action_booking_rule"
+              sequence="60"
+              groups="account.group_account_manager"/>
 </odoo>

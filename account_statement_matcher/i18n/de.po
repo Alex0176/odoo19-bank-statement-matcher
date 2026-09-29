@@ -1,10 +1,13 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_matcher
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 12:47+0000\n"
-"PO-Revision-Date: 2026-09-14 12:47+0000\n"
+"POT-Creation-Date: 2026-09-29 20:03+0000\n"
+"PO-Revision-Date: 2026-09-29 20:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -58,6 +61,21 @@ msgid ""
 "100 a document reference was found in the bank text, 80 partner and amount "
 "match, 60 the amount identifies a single open item, 30 partner only."
 msgstr ""
+"100 Belegnummer im Banktext gefunden, 80 Partner und Betrag stimmen, 60 der "
+"Betrag bestimmt genau einen offenen Posten, 30 nur der Partner."
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid ""
+"<span invisible=\"matcher_state != 'rule'\"> matches this line and books it on\n"
+"                        </span>\n"
+"                        <span invisible=\"matcher_state == 'rule'\"> booked this line on\n"
+"                        </span>"
+msgstr ""
+"<span invisible=\"matcher_state != 'rule'\"> passt auf diese Zeile und bucht sie auf\n"
+"                        </span>\n"
+"                        <span invisible=\"matcher_state == 'rule'\"> hat diese Zeile gebucht auf\n"
+"                        </span>"
 
 #. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
@@ -66,6 +84,14 @@ msgid ""
 "                        vendor bills, credit notes and down payments entered\n"
 "                        afterwards are picked up by \"Search again\"."
 msgstr ""
+"Eine Zeile ohne Treffer kann später erneut durchsucht werden:\n"
+"                        Lieferantenrechnungen, Gutschriften und Anzahlungen, die danach\n"
+"                        erfasst werden, findet „Erneut suchen“."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__active
+msgid "Active"
+msgstr "Aktiv"
 
 #. module: account_statement_matcher
 #: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_journal__matcher_auto_apply_min_score__60
@@ -81,6 +107,11 @@ msgstr "Mehrdeutig"
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
 msgid "Apply best suggestion"
 msgstr "Besten Vorschlag übernehmen"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_booking_rule_form
+msgid "Archived"
+msgstr "Archiviert"
 
 #. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
@@ -137,6 +168,16 @@ msgid "Bank Line Assignment"
 msgstr "Bankzeilen-Zuordnung"
 
 #. module: account_statement_matcher
+#: model:ir.model,name:account_statement_matcher.model_account_statement_booking_rule
+msgid "Bank Line Booking Rule"
+msgstr "Buchungsregel für Bankzeilen"
+
+#. module: account_statement_matcher
+#: model:ir.ui.menu,name:account_statement_matcher.menu_booking_rule
+msgid "Bank Line Booking Rules"
+msgstr "Buchungsregeln für Bankzeilen"
+
+#. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_list
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
 msgid "Bank Lines"
@@ -153,9 +194,63 @@ msgid "Bank Statement Match Suggestion"
 msgstr "Zuordnungsvorschlag Kontoauszug"
 
 #. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Book by rule"
+msgstr "Nach Regel buchen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__account_id
+msgid "Book on account"
+msgstr "Buchen auf Konto"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__auto_apply
+msgid "Book without asking"
+msgstr "Ohne Rückfrage buchen"
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "Booking %(line)s on %(account)s did not leave the line settled."
+msgstr ""
+"Die Buchung von %(line)s auf %(account)s hat die Zeile nicht ausgeglichen."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_rule_id
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_booking_rule_form
+msgid "Booking Rule"
+msgstr "Buchungsregel"
+
+#. module: account_statement_matcher
+#: model:ir.actions.act_window,name:account_statement_matcher.action_booking_rule
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_booking_rule_list
+msgid "Booking Rules"
+msgstr "Buchungsregeln"
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Booking rule"
+msgstr "Buchungsregel"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_bank_statement_line__matcher_state__rule
+msgid "Booking rule matches"
+msgstr "Buchungsregel passt"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_statement_booking_rule__direction__both
+msgid "Both"
+msgstr "Beides"
+
+#. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
 msgid "Close"
 msgstr "Schließen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__company_id
+msgid "Company"
+msgstr "Unternehmen"
 
 #. module: account_statement_matcher
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__currency_id
@@ -175,26 +270,42 @@ msgid ""
 "being asked. Weaker suggestions are still shown, they just have to be "
 "confirmed one by one."
 msgstr ""
+"Sicherheit, die ein Vorschlag braucht, damit die Sammelaktion ihn ohne "
+"Rückfrage zuordnet. Schwächere Vorschläge werden weiterhin angezeigt, müssen"
+" aber einzeln bestätigt werden."
 
 #. module: account_statement_matcher
+#: model_terms:ir.actions.act_window,help:account_statement_matcher.action_booking_rule
+msgid "Create a booking rule"
+msgstr "Buchungsregel anlegen"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__create_uid
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__create_uid
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Erstellt von"
 
 #. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__create_date
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__create_date
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__direction
+msgid "Direction"
+msgstr "Richtung"
 
 #. module: account_statement_matcher
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__display_name
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__display_name
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__display_name
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: account_statement_matcher
 #. odoo-python
@@ -216,6 +327,7 @@ msgstr "Mit Vorschlag"
 #. module: account_statement_matcher
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__id
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_journal__id
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__id
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__id
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__id
 msgid "ID"
@@ -232,19 +344,26 @@ msgstr ""
 #: model:ir.model,name:account_statement_matcher.model_account_journal
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
 msgid "Journal"
-msgstr "Journal"
+msgstr ""
 
 #. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__keywords
+msgid "Keywords"
+msgstr "Stichwörter"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__write_uid
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__write_uid
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt aktualisiert von"
 
 #. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__write_date
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__write_date
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: account_statement_matcher
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_candidate_ids
@@ -262,6 +381,27 @@ msgstr "Gefunden über"
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
 msgid "Matching"
 msgstr "Zuordnung"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_statement_booking_rule__direction__in
+msgid "Money coming in"
+msgstr "Geld kommt herein"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_statement_booking_rule__direction__out
+msgid "Money going out"
+msgstr "Geld geht hinaus"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__name
+msgid "Name"
+msgstr "Name"
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "No booking rule matches %s."
+msgstr "Keine Buchungsregel passt auf %s."
 
 #. module: account_statement_matcher
 #. odoo-python
@@ -293,6 +433,28 @@ msgstr "Hinweis"
 #: model_terms:ir.actions.act_window,help:account_statement_matcher.action_statement_line_matcher
 msgid "Nothing left to assign."
 msgstr "Nichts mehr zuzuordnen."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_statement_booking_rule__keywords
+msgid ""
+"One word or phrase per line. The rule applies when the bank text, the "
+"reference or the name of the counterparty contains one of them. "
+"Capitalisation, spaces and punctuation do not matter."
+msgstr ""
+"Ein Wort oder eine Wendung pro Zeile. Die Regel gilt, wenn der "
+"Bankbuchungstext, die Referenz oder der Name des Zahlungspartners eines "
+"davon enthält. Groß-/Kleinschreibung, Leerzeichen und Satzzeichen spielen "
+"keine Rolle."
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_booking_rule_form
+msgid "One word per line, for example: rent"
+msgstr "Ein Wort pro Zeile, zum Beispiel: miete"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__partner_id
+msgid "Only for partner"
+msgstr "Nur für Partner"
 
 #. module: account_statement_matcher
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__only_unassigned
@@ -347,6 +509,9 @@ msgid ""
 "Pick any open item yourself when no suggestion fits, for example when the "
 "payment belongs to a document the search cannot know about."
 msgstr ""
+"Wählen Sie selbst einen offenen Posten, wenn kein Vorschlag passt, zum "
+"Beispiel wenn die Zahlung zu einem Beleg gehört, den die Suche nicht kennen "
+"kann."
 
 #. module: account_statement_matcher
 #. odoo-python
@@ -376,6 +541,44 @@ msgid "Reference, or partner and amount together"
 msgstr "Referenz, oder Partner und Betrag zusammen"
 
 #. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_statement_booking_rule__direction
+msgid ""
+"Rent is paid, interest on a loan is paid, interest on a deposit is received:"
+" the same word can mean two different accounts."
+msgstr ""
+"Miete wird gezahlt, Zinsen auf ein Darlehen werden gezahlt, Zinsen auf ein "
+"Guthaben werden gutgeschrieben: dasselbe Wort kann zwei verschiedene Konten "
+"bedeuten."
+
+#. module: account_statement_matcher
+#: model_terms:ir.actions.act_window,help:account_statement_matcher.action_booking_rule
+msgid ""
+"Rent, bank fees, interest and salaries are paid without an invoice.\n"
+"            A rule books such bank lines on the right account."
+msgstr ""
+"Miete, Bankgebühren, Zinsen und Gehälter werden ohne Rechnung bezahlt.\n"
+"            Eine Regel bucht solche Bankzeilen auf das richtige Konto."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_statement_booking_rule__assign_partner_id
+msgid ""
+"Replace the partner of the line when booking. Useful when the bank text "
+"names a person but the import assigned the company itself."
+msgstr ""
+"Ersetzt beim Buchen den Partner der Zeile. Nützlich, wenn der "
+"Bankbuchungstext eine Person nennt, der Import aber das eigene Unternehmen "
+"eingetragen hat."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_statement_booking_rule__partner_id
+msgid ""
+"Restrict the rule to lines of this partner. Without keywords, every line of "
+"the partner in the chosen direction matches."
+msgstr ""
+"Beschränkt die Regel auf Zeilen dieses Partners. Ohne Stichwörter passt jede"
+" Zeile des Partners in der gewählten Richtung."
+
+#. module: account_statement_matcher
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__message
 msgid "Result"
 msgstr "Ergebnis"
@@ -386,6 +589,32 @@ msgid ""
 "Result of the last search for matching documents. Refresh it whenever new "
 "documents have been entered."
 msgstr ""
+"Ergebnis der letzten Suche nach passenden Belegen. Bitte erneut suchen, "
+"sobald neue Belege erfasst wurden."
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_statement_booking_rule.py:0
+msgid ""
+"Rule %(rule)s: %(account)s is a receivable, payable, bank or credit card "
+"account. A rule books on a plain account; open items are settled by the "
+"search."
+msgstr ""
+"Regel %(rule)s: %(account)s ist ein Forderungs-, Verbindlichkeits-, Bank- "
+"oder Kreditkartenkonto. Eine Regel bucht auf ein einfaches Konto; offene "
+"Posten gleicht die Suche aus."
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_statement_booking_rule.py:0
+msgid "Rule %s needs at least one keyword of %s characters or a partner."
+msgstr ""
+"Regel %s braucht mindestens ein Stichwort mit %s Zeichen oder einen Partner."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_rule_account_id
+msgid "Rule Account"
+msgstr "Regelkonto"
 
 #. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
@@ -406,6 +635,19 @@ msgid ""
 "statement line is created. Suggestions are only proposed; nothing is booked "
 "without a user confirming it."
 msgstr ""
+"Sucht passende Rechnungen, Lieferantenrechnungen, Gutschriften und "
+"Zahlungen, sobald eine Kontoauszugszeile angelegt wird. Vorschläge werden "
+"nur gemacht; ohne Bestätigung eines Benutzers wird nichts gebucht."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__sequence
+msgid "Sequence"
+msgstr "Reihenfolge"
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__assign_partner_id
+msgid "Set partner to"
+msgstr "Partner setzen auf"
 
 #. module: account_statement_matcher
 #: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_bank_statement_line__matcher_state__ambiguous
@@ -429,12 +671,14 @@ msgid ""
 "Statement line %s has no single open counterpart line; it was probably "
 "already partly assigned."
 msgstr ""
+"Die Kontoauszugszeile %s hat keine einzelne offene Gegenzeile; sie wurde "
+"vermutlich schon teilweise zugeordnet."
 
 #. module: account_statement_matcher
 #. odoo-python
 #: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
 msgid "Statement line %s is already assigned."
-msgstr ""
+msgstr "Die Kontoauszugszeile %s ist bereits zugeordnet."
 
 #. module: account_statement_matcher
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_journal__matcher_auto_suggest
@@ -453,6 +697,16 @@ msgid "Suggestions"
 msgstr "Vorschläge"
 
 #. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_statement_booking_rule__auto_apply
+msgid ""
+"The bulk action books lines matched by this rule on its own. Without it the "
+"rule only proposes, and the line is booked from its form."
+msgstr ""
+"Die Sammelaktion bucht Zeilen, auf die diese Regel passt, von selbst. Ohne "
+"diese Option schlägt die Regel nur vor, und die Zeile wird im Formular "
+"gebucht."
+
+#. module: account_statement_matcher
 #. odoo-python
 #: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
 msgid "The counterpart line of %s disappeared while assigning it."
@@ -462,7 +716,23 @@ msgstr "Die Gegenbuchung von %s ist beim Zuordnen verschwunden."
 #: model:ir.model.fields,help:account_statement_matcher.field_account_statement_match_candidate__amount_residual
 msgid ""
 "The residual amount on a journal item expressed in the company currency."
+msgstr "Der Restbetrag einer Buchungszeile in der Unternehmenswährung."
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_bank_statement_line__matcher_rule_id
+msgid "The rule that matches this line, or the one that booked it."
+msgstr "Die Regel, die auf diese Zeile passt, oder die, die sie gebucht hat."
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_booking_rule_form
+msgid ""
+"The rules are tried in order and the first that fits wins. They\n"
+"                        only apply to lines for which the search found no document\n"
+"                        with a matching reference, or with partner and amount together."
 msgstr ""
+"Die Regeln werden der Reihe nach geprüft, die erste passende gilt. Sie "
+"greifen nur bei Zeilen, für die die Suche keinen Beleg mit passender "
+"Referenz oder mit Partner und Betrag zusammen gefunden hat."
 
 #. module: account_statement_matcher
 #. odoo-python
@@ -471,6 +741,8 @@ msgid ""
 "The selected documents belong to different partners. Assign them one at a "
 "time."
 msgstr ""
+"Die gewählten Belege gehören zu verschiedenen Partnern. Bitte einzeln "
+"zuordnen."
 
 #. module: account_statement_matcher
 #. odoo-python
@@ -479,6 +751,13 @@ msgid ""
 "The selected documents use different accounts (%s). Assign them one at a "
 "time."
 msgstr ""
+"Die gewählten Belege verwenden verschiedene Konten (%s). Bitte einzeln "
+"zuordnen."
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_booking_rule_form
+msgid "Then"
+msgstr "Dann"
 
 #. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
@@ -486,6 +765,8 @@ msgid ""
 "This posts the assignments for every line with exactly one best suggestion. "
 "Continue?"
 msgstr ""
+"Dadurch werden die Zuordnungen für jede Zeile mit genau einem besten "
+"Vorschlag gebucht. Fortfahren?"
 
 #. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
@@ -493,12 +774,14 @@ msgid ""
 "This removes the assignment and puts the amount back on the suspense "
 "account. Continue?"
 msgstr ""
+"Dadurch wird die Zuordnung aufgehoben und der Betrag wieder auf das Bank-"
+"Zwischenkonto gebucht. Fortfahren?"
 
 #. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_list
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
 msgid "Total"
-msgstr ""
+msgstr "Summe"
 
 #. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
@@ -522,6 +805,14 @@ msgid ""
 "assigned -- typically a quotation or an order that has not been invoiced "
 "yet."
 msgstr ""
+"Was die Suche über diese Zeile herausgefunden hat, obwohl nichts zugeordnet "
+"werden konnte – typischerweise ein Angebot oder ein Auftrag, der noch nicht "
+"fakturiert ist."
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_booking_rule_form
+msgid "When"
+msgstr "Wenn"
 
 #. module: account_statement_matcher
 #. odoo-python
