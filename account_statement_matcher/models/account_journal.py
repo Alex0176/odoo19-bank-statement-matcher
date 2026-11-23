@@ -28,3 +28,11 @@ class AccountJournal(models.Model):
              "without being asked. Weaker suggestions are still shown, they "
              "just have to be confirmed one by one.",
     )
+    matcher_private_account_id = fields.Many2one(
+        comodel_name="account.account",
+        string="Account for private payments",
+        domain="[('account_type', 'not in', ('asset_cash', 'liability_credit_card'))]",
+        help="Statement lines marked as private (for example a holiday paid with the company card) "
+             "are booked on this account by 'Book as private': a claim against the owner that is "
+             "settled when the amount is transferred back. Leave empty to only mark them.",
+    )

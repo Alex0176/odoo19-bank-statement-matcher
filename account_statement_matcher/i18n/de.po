@@ -819,3 +819,161 @@ msgstr "Wenn"
 #: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
 msgid "purchase.order"
 msgstr ""
+
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "%s was already paid back; it cannot be taken out of the private list."
+msgstr "%s wurde schon zurückgezahlt und kann nicht mehr aus der Privatliste genommen werden."
+
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__journal_private_account_id
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_journal__matcher_private_account_id
+msgid "Account for private payments"
+msgstr "Konto für private Zahlungen"
+
+#: model:ir.actions.server,name:account_statement_matcher.action_server_book_private
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Book as private"
+msgstr "Als privat buchen"
+
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_private_settle_wizard_form
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__count
+msgid "Count"
+msgstr "Anzahl"
+
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__currency_id
+msgid "Currency"
+msgstr "Währung"
+
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "Journal %s has no account for private payments (journal settings)."
+msgstr "Journal %s hat kein Konto für private Zahlungen (Journal-Einstellungen)."
+
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_private_settle_wizard_form
+msgid "Mark as paid back"
+msgstr "Als zurückgezahlt markieren"
+
+#: model:ir.actions.server,name:account_statement_matcher.action_server_mark_private
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Mark as private"
+msgstr "Als privat markieren"
+
+#: model:ir.actions.act_window,name:account_statement_matcher.action_private_settle_wizard
+msgid "Mark private payments as paid back"
+msgstr "Private Zahlungen als zurückgezahlt markieren"
+
+#: code:addons/account_statement_matcher/wizard/private_settle_wizard.py:0
+msgid "No open private payment is selected."
+msgstr "Es ist keine offene private Zahlung ausgewählt."
+
+#: model_terms:ir.actions.act_window,help:account_statement_matcher.action_private_payments
+msgid "No private payments."
+msgstr "Keine privaten Zahlungen."
+
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_private_open
+msgid "Not paid back yet"
+msgstr "Noch nicht zurückgezahlt"
+
+#: model:ir.actions.server,name:account_statement_matcher.action_server_unmark_private
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Not private"
+msgstr "Nicht privat"
+
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_private_settled_ref
+msgid "Paid back by"
+msgstr "Zurückgezahlt per"
+
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_private_settled_date
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__date
+msgid "Paid back on"
+msgstr "Zurückgezahlt am"
+
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_private
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Private"
+msgstr "Privat"
+
+#: model:ir.actions.act_window,name:account_statement_matcher.action_private_payments
+#: model:ir.ui.menu,name:account_statement_matcher.menu_private_payments
+msgid "Private Payments"
+msgstr "Private Zahlungen"
+
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__line_ids
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_private_list
+msgid "Private payments"
+msgstr "Private Zahlungen"
+
+#: model:ir.model,name:account_statement_matcher.model_account_statement_private_settle_wizard
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_private_settle_wizard_form
+msgid "Private payments paid back"
+msgstr "Private Zahlungen zurückgezahlt"
+
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Private, not paid back"
+msgstr "Privat, noch nicht zurückgezahlt"
+
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__reference
+msgid "Reference of the transfer"
+msgstr "Verwendungszweck der Überweisung"
+
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "Statement line %s has no single open counterpart line."
+msgstr "Die Bankzeile %s hat keine einzelne offene Gegenzeile."
+
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "The amount is booked on the private account of the journal. Continue?"
+msgstr "Der Betrag wird auf das Privatkonto des Journals gebucht. Fortfahren?"
+
+#: model:ir.model.fields,help:account_statement_matcher.field_account_bank_statement_line__matcher_private_settled_date
+msgid "The day the private amount was transferred back to the company."
+msgstr "Der Tag, an dem der private Betrag an die Firma zurücküberwiesen wurde."
+
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__total
+msgid "Total to transfer"
+msgstr "Zu überweisender Betrag"
+
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_private_settle_wizard_form
+msgid "e.g. transfer of 13.11."
+msgstr "z. B. Überweisung vom 13.11."
+
+
+#. module: account_statement_matcher
+msgid "Search all open lines again"
+msgstr "Alle offenen Zeilen erneut suchen"
+
+#. module: account_statement_matcher
+msgid "Assign to bank line"
+msgstr "Bankzeile zuordnen"
+
+#. module: account_statement_matcher
+msgid "Assign to a bank line"
+msgstr "Einer Bankzeile zuordnen"
+
+#. module: account_statement_matcher
+msgid "Bank Line Suggestions"
+msgstr "Bankzeilen-Vorschläge"
+
+#. module: account_statement_matcher
+msgid "Bank Date"
+msgstr "Bankdatum"
+
+#. module: account_statement_matcher
+msgid "Bank Text"
+msgstr "Buchungstext der Bank"
+
+#. module: account_statement_matcher
+msgid "Bank Amount"
+msgstr "Bankbetrag"
+
+#. module: account_statement_matcher
+msgid "Bank Line Assignment: search open lines again"
+msgstr "Bankzeilen zuordnen: offene Zeilen erneut suchen"
+
+#. module: account_statement_matcher
+msgid "%s open lines: the search runs in the background."
+msgstr "%s offene Zeilen: Die Suche läuft im Hintergrund."
+
+#. module: account_statement_matcher
+msgid "%(n)s open lines searched again, %(f)s with a suggestion."
+msgstr "%(n)s offene Zeilen erneut durchsucht, %(f)s mit Vorschlag."

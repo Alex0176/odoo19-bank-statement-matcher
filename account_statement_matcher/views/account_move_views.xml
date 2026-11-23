@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Biricon IT Services GmbH
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <record id="view_match_candidate_for_move" model="ir.ui.view">
+        <field name="name">account.statement.match.candidate.for.move</field>
+        <field name="model">account.statement.match.candidate</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false" edit="false">
+                <field name="line_date"/>
+                <field name="line_text"/>
+                <field name="line_amount"/>
+                <field name="score" string="Confidence"/>
+                <field name="rule" string="Matched by"/>
+                <field name="amount_residual"/>
+                <field name="currency_id" column_invisible="1"/>
+                <button name="action_apply" type="object" string="Assign" class="btn-primary" icon="fa-check"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_move_form_matcher_assign" model="ir.ui.view">
+        <field name="name">account.move.form.matcher.assign</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="matcher_candidate_count" invisible="1"/>
+                <button name="action_matcher_assign" type="object" class="btn-secondary"
+                        string="Assign to bank line" icon="fa-link"
+                        invisible="matcher_candidate_count == 0 or state != 'posted' or payment_state in ('paid', 'in_payment', 'reversed')"
+                        groups="account.group_account_user"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

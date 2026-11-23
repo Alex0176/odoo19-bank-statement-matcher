@@ -43,6 +43,11 @@ class AccountStatementMatchCandidate(models.Model):
         currency_field="currency_id",
     )
     currency_id = fields.Many2one(related="move_line_id.company_currency_id")
+    line_date = fields.Date(related="statement_line_id.date", string="Bank Date")
+    line_text = fields.Char(related="statement_line_id.payment_ref", string="Bank Text")
+    line_amount = fields.Monetary(related="statement_line_id.amount", string="Bank Amount",
+                                  currency_field="line_currency_id")
+    line_currency_id = fields.Many2one(related="statement_line_id.currency_id")
     score = fields.Integer(
         string="Confidence",
         help="100 a document reference was found in the bank text, "

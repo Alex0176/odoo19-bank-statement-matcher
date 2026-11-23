@@ -15,6 +15,11 @@
                   decoration-success="matcher_state == 'done'"
                   decoration-warning="matcher_state == 'ambiguous'"
                   decoration-muted="matcher_state == 'none'">
+                <header>
+                    <button name="action_matcher_refresh_all" type="object" display="always"
+                            string="Search all open lines again" class="btn-secondary"
+                            groups="account.group_account_user"/>
+                </header>
                 <field name="date"/>
                 <field name="journal_id"/>
                 <field name="payment_ref"/>
@@ -27,6 +32,7 @@
                        decoration-info="matcher_state in ('suggested', 'rule')"
                        decoration-warning="matcher_state == 'ambiguous'"/>
                 <field name="matcher_candidate_count" string="#"/>
+                <field name="matcher_private" optional="show"/>
                 <button name="action_matcher_refresh" type="object"
                         string="Search again" icon="fa-refresh"/>
             </list>
@@ -55,6 +61,18 @@
                             icon="fa-undo"
                             confirm="This removes the assignment and puts the amount back on the suspense account. Continue?"
                             invisible="not is_reconciled"/>
+                    <button name="action_matcher_mark_private" type="object"
+                            string="Mark as private" class="btn-secondary"
+                            icon="fa-user"
+                            invisible="matcher_private or is_reconciled"/>
+                    <button name="action_matcher_book_private" type="object"
+                            string="Book as private" class="btn-secondary"
+                            icon="fa-check"
+                            invisible="not matcher_private or is_reconciled or not journal_private_account_id"
+                            confirm="The amount is booked on the private account of the journal. Continue?"/>
+                    <button name="action_matcher_unmark_private" type="object"
+                            string="Not private" class="btn-secondary"
+                            invisible="not matcher_private or matcher_private_settled_date"/>
                     <field name="matcher_state" widget="statusbar"
                            statusbar_visible="todo,suggested,done"/>
                 </header>
@@ -66,6 +84,10 @@
                             <field name="amount" readonly="1"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="is_reconciled" readonly="1"/>
+                            <field name="matcher_private" readonly="1"/>
+                            <field name="matcher_private_settled_date" invisible="not matcher_private"/>
+                            <field name="matcher_private_settled_ref" invisible="not matcher_private"/>
+                            <field name="journal_private_account_id" invisible="1"/>
                         </group>
                         <group string="Reference">
                             <field name="payment_ref" readonly="1"/>
@@ -140,6 +162,11 @@
                         domain="[('matcher_state', '=', 'ambiguous')]"/>
                 <filter name="no_match" string="No match"
                         domain="[('matcher_state', '=', 'none')]"/>
+                <separator/>
+                <filter name="private" string="Private"
+                        domain="[('matcher_private', '=', True)]"/>
+                <filter name="private_open" string="Private, not paid back"
+                        domain="[('matcher_private_open', '=', True)]"/>
                 <group name="groupby">
                     <filter name="group_journal" string="Journal"
                             context="{'group_by': 'journal_id'}"/>
@@ -191,4 +218,48 @@
         <field name="binding_view_types">list,form</field>
     </record>
 
+
+    <record id="view_statement_line_private_list" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.private.list</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="arch" type="xml">
+            <list string="Private payments" create="false" edit="false"
+                  decoration-muted="matcher_private_settled_date">
+                <field name="date"/>
+                <field name="journal_id"/>
+                <field name="payment_ref"/>
+                <field name="amount" sum="Total"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="matcher_private_settled_date"/>
+                <field name="matcher_private_settled_ref" optional="show"/>
+                <field name="matcher_private_open" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_private_payments" model="ir.actions.act_window">
+        <field name="name">Private Payments</field>
+        <field name="res_model">account.bank.statement.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('matcher_private', '=', True)]</field>
+        <field name="search_view_id" ref="view_statement_line_matcher_search"/>
+        <field name="context">{'search_default_private_open': 1, 'search_default_group_journal': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No private payments.</p>
+            <p>Mark a statement line as private in the bank line assignment. Here the private
+            amounts are summed up for the transfer back to the company account.</p>
+        </field>
+    </record>
+    <record id="action_private_payments_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_statement_line_private_list"/>
+        <field name="act_window_id" ref="action_private_payments"/>
+    </record>
+    <record id="action_private_payments_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_statement_line_matcher_form"/>
+        <field name="act_window_id" ref="action_private_payments"/>
+    </record>
 </odoo>

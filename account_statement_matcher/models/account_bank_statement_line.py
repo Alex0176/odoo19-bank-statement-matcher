@@ -28,12 +28,15 @@ Design notes
 
 import logging
 import re
+import time
+from datetime import timedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
+MATCHER_ALL_NOW_LIMIT = 300
 
 # Tokens shorter than this are too generic to identify a document.
 MIN_TOKEN_LENGTH = 4
@@ -107,6 +110,28 @@ class AccountBankStatementLine(models.Model):
              "could be assigned -- typically a quotation or an order that has "
              "not been invoiced yet.",
     )
+
+    matcher_private = fields.Boolean(
+        string="Private",
+        copy=False,
+        index=True,
+        help="A payment made with the company account or card that is not a company expense "
+             "(for example holiday costs). The private amounts are summed up in "
+             "'Private payments' and transferred back from the private account.",
+    )
+    matcher_private_settled_date = fields.Date(
+        string="Paid back on", copy=False, readonly=True,
+        help="The day the private amount was transferred back to the company.",
+    )
+    matcher_private_settled_ref = fields.Char(string="Paid back by", copy=False, readonly=True)
+    journal_private_account_id = fields.Many2one(related="journal_id.matcher_private_account_id")
+    matcher_private_open = fields.Boolean(
+        string="Not paid back yet", compute="_compute_matcher_private_open", store=True)
+
+    @api.depends("matcher_private", "matcher_private_settled_date")
+    def _compute_matcher_private_open(self):
+        for line in self:
+            line.matcher_private_open = bool(line.matcher_private and not line.matcher_private_settled_date)
 
     @api.depends("matcher_candidate_ids")
     def _compute_matcher_candidate_count(self):
@@ -388,6 +413,60 @@ class AccountBankStatementLine(models.Model):
         return True
 
     # ------------------------------------------------------------------
+    # Search all open lines again (button) and in the background
+    # ------------------------------------------------------------------
+    @api.model
+    def _matcher_open_lines(self, auto_only=False):
+        domain = [("is_reconciled", "=", False)]
+        if auto_only:
+            domain.append(("journal_id.matcher_auto_suggest", "=", True))
+        return self.search(domain, order="id")
+
+    @api.model
+    def action_matcher_refresh_all(self):
+        """Search again for EVERY open statement line (list button).
+
+        Up to the limit it runs right away; beyond that the background job takes over.
+        """
+        lines = self._matcher_open_lines()
+        if len(lines) > MATCHER_ALL_NOW_LIMIT:
+            self.env.ref("account_statement_matcher.ir_cron_refresh_open").sudo()._trigger()
+            message = _("%s open lines: the search runs in the background.", len(lines))
+        else:
+            lines.action_matcher_refresh()
+            found = len(lines.filtered(lambda l: l.matcher_state in ("suggested", "rule", "ambiguous")))
+            message = _("%(n)s open lines searched again, %(f)s with a suggestion.", n=len(lines), f=found)
+        return {
+            "type": "ir.actions.client", "tag": "display_notification",
+            "params": {"title": _("Bank Line Assignment"), "message": message, "type": "success",
+                       "next": {"type": "ir.actions.client", "tag": "reload"}},
+        }
+
+    @api.model
+    def _matcher_refresh_open(self, seconds=60):
+        """Background job: search all open lines again within a time budget.
+
+        Lines are taken in the order of the last search so that, when the budget runs out,
+        the next run continues with the lines that waited longest.
+        """
+        started = time.monotonic()
+        lines = self._matcher_open_lines(auto_only=True).sorted(lambda l: l.write_date or l.create_date)
+        done = 0
+        for line in lines:
+            if time.monotonic() - started > seconds:
+                self.env.ref("account_statement_matcher.ir_cron_refresh_open").sudo()._trigger(
+                    at=fields.Datetime.now() + timedelta(seconds=30))
+                break
+            try:
+                with self.env.cr.savepoint():
+                    line.action_matcher_refresh()
+                done += 1
+            except Exception:  # noqa: BLE001
+                _logger.exception("Background match search failed for statement line %s", line.id)
+        _logger.info("Match search in the background: %s of %s open lines", done, len(lines))
+        return done
+
+    # ------------------------------------------------------------------
     # Apply
     # ------------------------------------------------------------------
     def _matcher_counterpart_lines(self):
@@ -646,6 +725,44 @@ class AccountBankStatementLine(models.Model):
                 move.action_post()
             line.matcher_rule_id = False
             line.matcher_state = "todo"
+        return True
+
+    # ------------------------------------------------------------------
+    # Private payments
+    # ------------------------------------------------------------------
+    def action_matcher_mark_private(self):
+        """Mark the lines as private. Nothing is booked: the amounts only show up in the private list."""
+        lines = self.filtered(lambda l: not l.matcher_private)
+        lines.write({"matcher_private": True})
+        return True
+
+    def action_matcher_unmark_private(self):
+        for line in self:
+            if line.matcher_private_settled_date:
+                raise UserError(_("%s was already paid back; it cannot be taken out of the private list.",
+                                  line.display_name))
+        self.write({"matcher_private": False})
+        return True
+
+    def action_matcher_book_private(self):
+        """Book the marked lines on the private account of their journal (claim against the owner)."""
+        for line in self:
+            if line.is_reconciled:
+                continue
+            account = line.journal_id.matcher_private_account_id
+            if not account:
+                raise UserError(_("Journal %s has no account for private payments (journal settings).",
+                                  line.journal_id.display_name))
+            if not line.matcher_private:
+                line.matcher_private = True
+            suspense = line._matcher_counterpart_lines()
+            if len(suspense) != 1:
+                raise UserError(_("Statement line %s has no single open counterpart line.", line.display_name))
+            suspense.write({"account_id": account.id})
+            line.invalidate_recordset()
+            line.matcher_candidate_ids.unlink()
+            line.matcher_state = "done"
+            _logger.info("Statement line %s booked as private on %s", line.id, account.code)
         return True
 
     # ------------------------------------------------------------------

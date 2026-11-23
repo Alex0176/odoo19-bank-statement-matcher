@@ -8,6 +8,12 @@
               action="action_statement_line_matcher"
               sequence="25"
               groups="account.group_account_user"/>
+    <menuitem id="menu_private_payments"
+              name="Private Payments"
+              parent="account.menu_finance_entries"
+              action="action_private_payments"
+              sequence="26"
+              groups="account.group_account_user"/>
     <menuitem id="menu_booking_rule"
               name="Bank Line Booking Rules"
               parent="account.menu_finance_configuration"

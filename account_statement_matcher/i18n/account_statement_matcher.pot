@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-29 20:03+0000\n"
-"PO-Revision-Date: 2026-09-29 20:03+0000\n"
+"POT-Creation-Date: 2026-11-13 16:43+0000\n"
+"PO-Revision-Date: 2026-11-13 16:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -50,6 +50,12 @@ msgid "%s line(s) searched again."
 msgstr ""
 
 #. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "%s was already paid back; it cannot be taken out of the private list."
+msgstr ""
+
+#. module: account_statement_matcher
 #: model:ir.model.fields,help:account_statement_matcher.field_account_statement_match_candidate__score
 msgid ""
 "100 a document reference was found in the bank text, 80 partner and amount "
@@ -71,6 +77,20 @@ msgid ""
 "A line that finds nothing today can be searched again later:\n"
 "                        vendor bills, credit notes and down payments entered\n"
 "                        afterwards are picked up by \"Search again\"."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_bank_statement_line__matcher_private
+msgid ""
+"A payment made with the company account or card that is not a company "
+"expense (for example holiday costs). The private amounts are summed up in "
+"'Private payments' and transferred back from the private account."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__journal_private_account_id
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_journal__matcher_private_account_id
+msgid "Account for private payments"
 msgstr ""
 
 #. module: account_statement_matcher
@@ -179,6 +199,12 @@ msgid "Bank Statement Match Suggestion"
 msgstr ""
 
 #. module: account_statement_matcher
+#: model:ir.actions.server,name:account_statement_matcher.action_server_book_private
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Book as private"
+msgstr ""
+
+#. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
 msgid "Book by rule"
 msgstr ""
@@ -227,6 +253,11 @@ msgid "Both"
 msgstr ""
 
 #. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_private_settle_wizard_form
+msgid "Cancel"
+msgstr ""
+
+#. module: account_statement_matcher
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
 msgid "Close"
 msgstr ""
@@ -256,6 +287,11 @@ msgid ""
 msgstr ""
 
 #. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__count
+msgid "Count"
+msgstr ""
+
+#. module: account_statement_matcher
 #: model_terms:ir.actions.act_window,help:account_statement_matcher.action_booking_rule
 msgid "Create a booking rule"
 msgstr ""
@@ -264,6 +300,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__create_uid
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__create_uid
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__create_uid
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__create_uid
 msgid "Created by"
 msgstr ""
 
@@ -271,7 +308,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__create_date
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__create_date
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__create_date
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__currency_id
+msgid "Currency"
 msgstr ""
 
 #. module: account_statement_matcher
@@ -285,6 +328,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__display_name
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__display_name
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__display_name
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -311,6 +355,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__id
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__id
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__id
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__id
 msgid "ID"
 msgstr ""
 
@@ -327,6 +372,12 @@ msgid "Journal"
 msgstr ""
 
 #. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "Journal %s has no account for private payments (journal settings)."
+msgstr ""
+
+#. module: account_statement_matcher
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__keywords
 msgid "Keywords"
 msgstr ""
@@ -335,6 +386,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__write_uid
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__write_uid
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__write_uid
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -342,7 +394,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_booking_rule__write_date
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__write_date
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_wizard__write_date
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.actions.act_window,help:account_statement_matcher.action_private_payments
+msgid ""
+"Mark a statement line as private in the bank line assignment. Here the private\n"
+"            amounts are summed up for the transfer back to the company account."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_private_settle_wizard_form
+msgid "Mark as paid back"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.actions.server,name:account_statement_matcher.action_server_mark_private
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Mark as private"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.actions.act_window,name:account_statement_matcher.action_private_settle_wizard
+msgid "Mark private payments as paid back"
 msgstr ""
 
 #. module: account_statement_matcher
@@ -397,6 +473,28 @@ msgstr ""
 #. module: account_statement_matcher
 #: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_bank_statement_line__matcher_state__none
 msgid "No match found"
+msgstr ""
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/wizard/private_settle_wizard.py:0
+msgid "No open private payment is selected."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.actions.act_window,help:account_statement_matcher.action_private_payments
+msgid "No private payments."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_private_open
+msgid "Not paid back yet"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.actions.server,name:account_statement_matcher.action_server_unmark_private
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "Not private"
 msgstr ""
 
 #. module: account_statement_matcher
@@ -458,6 +556,17 @@ msgid "Open Item"
 msgstr ""
 
 #. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_private_settled_ref
+msgid "Paid back by"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_private_settled_date
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__date
+msgid "Paid back on"
+msgstr ""
+
+#. module: account_statement_matcher
 #: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_match_candidate__partner_id
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
 msgid "Partner"
@@ -487,6 +596,35 @@ msgid ""
 msgstr ""
 
 #. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_bank_statement_line__matcher_private
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Private"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.actions.act_window,name:account_statement_matcher.action_private_payments
+#: model:ir.ui.menu,name:account_statement_matcher.menu_private_payments
+msgid "Private Payments"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__line_ids
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_private_list
+msgid "Private payments"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model,name:account_statement_matcher.model_account_statement_private_settle_wizard
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_private_settle_wizard_form
+msgid "Private payments paid back"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_search
+msgid "Private, not paid back"
+msgstr ""
+
+#. module: account_statement_matcher
 #. odoo-python
 #: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
 msgid "Purchase Order"
@@ -506,6 +644,11 @@ msgstr ""
 #. module: account_statement_matcher
 #: model:ir.model.fields.selection,name:account_statement_matcher.selection__account_statement_match_candidate__rule__reference
 msgid "Reference found"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__reference
+msgid "Reference of the transfer"
 msgstr ""
 
 #. module: account_statement_matcher
@@ -621,6 +764,12 @@ msgstr ""
 #. module: account_statement_matcher
 #. odoo-python
 #: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
+msgid "Statement line %s has no single open counterpart line."
+msgstr ""
+
+#. module: account_statement_matcher
+#. odoo-python
+#: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
 msgid ""
 "Statement line %s has no single open counterpart line; it was probably "
 "already partly assigned."
@@ -630,6 +779,16 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
 msgid "Statement line %s is already assigned."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_bank_statement_line__journal_private_account_id
+#: model:ir.model.fields,help:account_statement_matcher.field_account_journal__matcher_private_account_id
+msgid ""
+"Statement lines marked as private (for example a holiday paid with the "
+"company card) are booked on this account by 'Book as private': a claim "
+"against the owner that is settled when the amount is transferred back. Leave"
+" empty to only mark them."
 msgstr ""
 
 #. module: account_statement_matcher
@@ -649,6 +808,11 @@ msgid "Suggestions"
 msgstr ""
 
 #. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_form
+msgid "The amount is booked on the private account of the journal. Continue?"
+msgstr ""
+
+#. module: account_statement_matcher
 #: model:ir.model.fields,help:account_statement_matcher.field_account_statement_booking_rule__auto_apply
 msgid ""
 "The bulk action books lines matched by this rule on its own. Without it the "
@@ -659,6 +823,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
 msgid "The counterpart line of %s disappeared while assigning it."
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,help:account_statement_matcher.field_account_bank_statement_line__matcher_private_settled_date
+msgid "The day the private amount was transferred back to the company."
 msgstr ""
 
 #. module: account_statement_matcher
@@ -716,9 +885,16 @@ msgid ""
 msgstr ""
 
 #. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_private_settle_wizard_form
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_matcher_list
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_line_private_list
 #: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_statement_match_wizard_form
 msgid "Total"
+msgstr ""
+
+#. module: account_statement_matcher
+#: model:ir.model.fields,field_description:account_statement_matcher.field_account_statement_private_settle_wizard__total
+msgid "Total to transfer"
 msgstr ""
 
 #. module: account_statement_matcher
@@ -750,7 +926,52 @@ msgid "When"
 msgstr ""
 
 #. module: account_statement_matcher
+#: model_terms:ir.ui.view,arch_db:account_statement_matcher.view_private_settle_wizard_form
+msgid "e.g. transfer of 13.11."
+msgstr ""
+
+#. module: account_statement_matcher
 #. odoo-python
 #: code:addons/account_statement_matcher/models/account_bank_statement_line.py:0
 msgid "purchase.order"
+msgstr ""
+
+#. module: account_statement_matcher
+msgid "Search all open lines again"
+msgstr ""
+
+#. module: account_statement_matcher
+msgid "Assign to bank line"
+msgstr ""
+
+#. module: account_statement_matcher
+msgid "Assign to a bank line"
+msgstr ""
+
+#. module: account_statement_matcher
+msgid "Bank Line Suggestions"
+msgstr ""
+
+#. module: account_statement_matcher
+msgid "Bank Date"
+msgstr ""
+
+#. module: account_statement_matcher
+msgid "Bank Text"
+msgstr ""
+
+#. module: account_statement_matcher
+msgid "Bank Amount"
+msgstr ""
+
+#. module: account_statement_matcher
+msgid "Bank Line Assignment: search open lines again"
+msgstr ""
+
+#. module: account_statement_matcher
+msgid "%s open lines: the search runs in the background."
+msgstr ""
+
+#. module: account_statement_matcher
+msgid "%(n)s open lines searched again, %(f)s with a suggestion."
 msgstr ""

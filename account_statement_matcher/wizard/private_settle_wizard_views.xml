@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Biricon IT Services GmbH
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <record id="view_private_settle_wizard_form" model="ir.ui.view">
+        <field name="name">account.statement.private.settle.wizard.form</field>
+        <field name="model">account.statement.private.settle.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Private payments paid back">
+                <group>
+                    <group>
+                        <field name="count"/>
+                        <field name="total"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="date"/>
+                        <field name="reference" placeholder="e.g. transfer of 13.11."/>
+                    </group>
+                </group>
+                <field name="line_ids" nolabel="1" readonly="1">
+                    <list>
+                        <field name="date"/>
+                        <field name="payment_ref"/>
+                        <field name="amount" sum="Total"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_settle" type="object" string="Mark as paid back" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_private_settle_wizard" model="ir.actions.act_window">
+        <field name="name">Mark private payments as paid back</field>
+        <field name="res_model">account.statement.private.settle.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+    <record id="action_server_mark_private" model="ir.actions.server">
+        <field name="name">Mark as private</field>
+        <field name="model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_matcher_mark_private()</field>
+    </record>
+
+    <record id="action_server_unmark_private" model="ir.actions.server">
+        <field name="name">Not private</field>
+        <field name="model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_matcher_unmark_private()</field>
+    </record>
+
+    <record id="action_server_book_private" model="ir.actions.server">
+        <field name="name">Book as private</field>
+        <field name="model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_matcher_book_private()</field>
+    </record>
+</odoo>

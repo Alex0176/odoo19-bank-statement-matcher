@@ -12,6 +12,8 @@
                        invisible="type not in ('bank', 'cash')"/>
                 <field name="matcher_auto_apply_min_score"
                        invisible="type not in ('bank', 'cash')"/>
+                <field name="matcher_private_account_id"
+                       invisible="type not in ('bank', 'cash', 'credit')"/>
             </xpath>
         </field>
     </record>
