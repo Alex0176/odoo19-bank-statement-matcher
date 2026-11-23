@@ -423,7 +423,7 @@ class AccountBankStatementLine(models.Model):
         return self.search(domain, order="id")
 
     @api.model
-    def action_matcher_refresh_all(self):
+    def action_matcher_refresh_all(self, *args, **kwargs):
         """Search again for EVERY open statement line (list button).
 
         Up to the limit it runs right away; beyond that the background job takes over.

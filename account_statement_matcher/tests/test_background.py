@@ -56,7 +56,8 @@ class TestBackgroundSearch(AccountTestInvoicingCommon):
     def test_refresh_all_button(self):
         a, b = self.bank_line(250.0), self.bank_line(80.0)
         self.bill(250.0)
-        result = self.env["account.bank.statement.line"].action_matcher_refresh_all()
+        # a list header button passes the selected ids as an argument (call_button)
+        result = self.env["account.bank.statement.line"].action_matcher_refresh_all([a.id])
         self.assertEqual(result["tag"], "display_notification")
         self.assertEqual(a.matcher_state, "suggested")
         self.assertEqual(max(a.matcher_candidate_ids.mapped("score")), 80, "partner and amount")
