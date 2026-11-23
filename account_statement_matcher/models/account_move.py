@@ -29,7 +29,9 @@ class AccountMove(models.Model):
         counts = {}
         ids = self.filtered(lambda m: m.id and m.is_invoice(include_receipts=True)).ids
         if ids:
-            groups = self.env["account.statement.match.candidate"]._read_group(
+            # sudo: only a count, and every user who may open the document must be able to compute it
+            # (without it users without the accounting rights got an access error on every invoice)
+            groups = self.env["account.statement.match.candidate"].sudo()._read_group(
                 [("move_id", "in", ids), ("statement_line_id.is_reconciled", "=", False)],
                 groupby=["move_id"], aggregates=["__count"])
             counts = {move.id: count for move, count in groups}

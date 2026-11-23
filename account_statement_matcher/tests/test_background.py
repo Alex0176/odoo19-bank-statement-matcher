@@ -62,3 +62,14 @@ class TestBackgroundSearch(AccountTestInvoicingCommon):
         self.assertEqual(a.matcher_state, "suggested")
         self.assertEqual(max(a.matcher_candidate_ids.mapped("score")), 80, "partner and amount")
         self.assertEqual(max(b.matcher_candidate_ids.mapped("score")), 30, "partner only")
+
+    def test_invoice_opens_for_users_without_accounting_rights(self):
+        """The suggestion count is computed for every user who opens an invoice, also without the accounting group."""
+        move = self.bill(250.0)
+        self.env["account.bank.statement.line"]._matcher_refresh_open()
+        user = self.env["res.users"].create({
+            "name": "Billing only", "login": "billing_only_t", "email": "b@example.com",
+            "group_ids": [Command.set([self.env.ref("base.group_user").id, self.env.ref("account.group_account_invoice").id])],
+        })
+        count = move.with_user(user).read(["matcher_candidate_count"])[0]["matcher_candidate_count"]
+        self.assertIsInstance(count, int)
